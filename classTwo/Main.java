@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,8 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Main extends JFrame {
 
@@ -172,7 +171,6 @@ public class Main extends JFrame {
 		changeWay.setFont(new Font("华文宋体", Font.PLAIN, 20));
 		JTextArea manAddress = new JTextArea();
 		manAddress.setFont(new Font("华文宋体", Font.PLAIN, 20));
-		manAddress.setText("0");
 		
 		JButton submit = new JButton("提交");
 		submit.addMouseListener(new MouseAdapter() {
@@ -225,8 +223,9 @@ public class Main extends JFrame {
 						}
 					}
 					opt.add(nood);
+					DecimalFormat df=new DecimalFormat("0.00");
 					misslabel.setText((int)miss + "次");
-					missPercent.setText((miss/look)*100 + "%");
+					missPercent.setText(df.format((miss/look)*100) + "%");
 					String s1 = Integer.toBinaryString(logicAddr);
 					if(s1.length() < 16){
 						int l = 16-s1.length();
@@ -240,7 +239,6 @@ public class Main extends JFrame {
 					String result = Integer.toHexString(re);
 					realAddr.setText(result);
 				}catch(Exception ex){
-					ex.printStackTrace();
 					JOptionPane.showMessageDialog(null, "请输入正确的逻辑地址！", "出错啦！", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -284,13 +282,25 @@ public class Main extends JFrame {
 						}else if(list.contains(opt.get(i)) == false){
 							a++;
 							b++;
-							
+							for(int j = i+1; j<i+size && j<opt.size(); j++){
+								if(list.contains(opt.get(j))){
+									for(int t = 0; t<list.size(); t++){
+										if(list.get(t).getSize()-1 == opt.get(j).getSize()-1){
+											Node node = list.remove(t);
+											list.add(node);
+										}
+									}
+								}
+							}
+							list.remove(0);
+							list.add(opt.get(i));
 						}else {
 							b++;
 						}
 					}
+					DecimalFormat df=new DecimalFormat("0.00");
 					optMiss.setText((int)a + "");
-					optPercent.setText(a/b + "");
+					optPercent.setText(df.format((a/b)*100) + "%");
 				}
 			}
 		});

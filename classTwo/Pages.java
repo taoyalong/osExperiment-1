@@ -65,7 +65,7 @@ public class Pages extends JPanel implements Runnable{
 			}
 		}else{
 			g.setColor(new Color(29, 131, 8));
-			g.drawString("块号", 40, 20);
+			g.drawString("内存", 40, 20);
 			g.setColor(Color.black);
 			for(int i = 1; i<=count; i++){
 				g.drawString(i-1+"", x+7, i*30+20);
